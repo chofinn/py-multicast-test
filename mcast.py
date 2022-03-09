@@ -131,7 +131,7 @@ def receiver(group, interface):
                 pass
         line_table[x][y] = 1
         print(x, y)
-        if (check(line_table):
+        if check(line_table):
             print("bingo!!")
 
 def get_ip_address(ifname):
@@ -151,13 +151,12 @@ def write_table():
     return table
 
 def check(table):
-    # 0: 有空的 1: 已經連過 2: 新連線
     for i in range(5):
         row = 1
         for j in range(5):
             if table[i][j] == 0:
                 row = 0
-            if table[i][j] == 1
+            if table[i][j] == 1:
                 row = 2
         if row == 2:
             for j in range(5):
@@ -169,7 +168,7 @@ def check(table):
         for j in range(5):
             if table[j][i] == 0:
                 col = 0
-            if table[j][i] == 1
+            if table[j][i] == 1:
                 col = 2
         if col == 2:
             for j in range(5):
