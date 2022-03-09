@@ -115,24 +115,44 @@ def receiver(group, interface):
         line_table.append([])
         for j in range(5):
             line_table[i].append(0)
-    print(table)
+    #print(table)
+    bingo = 0
     while True:
+        print("waiting...")
         data, sender = s.recvfrom(1500)
         while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
-        print (str(sender) + '  ' + repr(data))
+        #print (str(sender) + '  ' + repr(data))
         data = int(data)
+        print "number: " + str(data)
         x = -1
         y = -1
         for i in range(5):
-            try:
-                x, y = i, table[i].index(data)
-                break
-            except:
-                pass
+            for j in range(5):
+                if table[i][j] == data:
+                    x, y = i, j
+                    break
+            #try:
+            #    x, y = i, table[i].index(data)
+            #    print("circle")
+            #    break
+            #except:
+            #    pass
         line_table[x][y] = 1
-        print(x, y)
+        #print(x, y)
+        for i in range(5):
+            for j in range(5):
+                if line_table[i][j] > 0:
+                    print("X "),
+                else:
+                    print("* "),
+            print 
+        print
         if check(line_table):
+            bingo += 1
             print("bingo!!")
+            if bingo == 3:
+                print("U win")
+                break
 
 def get_ip_address(ifname):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -143,12 +163,13 @@ def get_ip_address(ifname):
     )[20:24])
 
 def write_table():
-    print("start write:")
+    print("start writing:")
     table = []
     for i in range(5):
        line = raw_input().split()
+       line = [int(x) for x in line]
        table.append(line)
-    print("end")
+    print("end\n")
     return table
 
 def check(table):
@@ -157,6 +178,7 @@ def check(table):
         for j in range(5):
             if table[i][j] == 0:
                 row = 0
+                break
             if table[i][j] == 1:
                 row = 2
         if row == 2:
@@ -169,6 +191,7 @@ def check(table):
         for j in range(5):
             if table[j][i] == 0:
                 col = 0
+                break
             if table[j][i] == 1:
                 col = 2
         if col == 2:
