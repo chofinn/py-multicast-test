@@ -69,7 +69,7 @@ def sender(group, interface):
 
     while True:
         #data = repr(time.time())
-        data = input()
+        data = raw_input()
         s.sendto(data + '\0', (addrinfo[4][0], MYPORT))
         time.sleep(1)
 
