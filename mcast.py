@@ -111,7 +111,7 @@ def receiver(group, interface):
     # Loop, printing any data we receive
     table = write_table()
     line_table = []
-    for i in rage(5):
+    for i in range(5):
         line_table.append([])
         for j in range(5):
             line_table[i].append(0)
@@ -143,11 +143,12 @@ def get_ip_address(ifname):
     )[20:24])
 
 def write_table():
+    print("start write:")
     table = []
     for i in range(5):
-        for j in range(5):
-            line = raw_input().split()
-            table.append(line)
+       line = raw_input().split()
+       table.append(line)
+    print("end")
     return table
 
 def check(table):
