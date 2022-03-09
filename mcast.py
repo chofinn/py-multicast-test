@@ -68,7 +68,8 @@ def sender(group, interface):
         s.setsockopt(socket.SOL_SOCKET, 25, interface)
 
     while True:
-        data = repr(time.time())
+        #data = repr(time.time())
+        data = input()
         s.sendto(data + '\0', (addrinfo[4][0], MYPORT))
         time.sleep(1)
 
@@ -108,10 +109,30 @@ def receiver(group, interface):
         s.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_JOIN_GROUP, mreq)
 
     # Loop, printing any data we receive
+    table = write_table()
+    line_table = []
+    for i in rage(5):
+        line_table.append([])
+        for j in range(5):
+            line_table[i].append(0)
+    print(table)
     while True:
         data, sender = s.recvfrom(1500)
         while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         print (str(sender) + '  ' + repr(data))
+        data = int(data)
+        x = -1
+        y = -1
+        for i in range(5):
+            try:
+                x, y = i, table[i].index(data)
+                break
+            except:
+                pass
+        line_table[x][y] = 1
+        print(x, y)
+        if (check(line_table):
+            print("bingo!!")
 
 def get_ip_address(ifname):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -120,6 +141,41 @@ def get_ip_address(ifname):
         0x8915,  # SIOCGIFADDR
         struct.pack('256s', ifname[:15])
     )[20:24])
+
+def write_table():
+    table = []
+    for i in range(5):
+        for j in range(5):
+            line = raw_input().split()
+            table.append(line)
+    return table
+
+def check(table):
+    # 0: 有空的 1: 已經連過 2: 新連線
+    for i in range(5):
+        row = 1
+        for j in range(5):
+            if table[i][j] == 0:
+                row = 0
+            if table[i][j] == 1
+                row = 2
+        if row == 2:
+            for j in range(5):
+                table[i][j] = 2
+            return True
+
+    for i in range(5):
+        col = 1
+        for j in range(5):
+            if table[j][i] == 0:
+                col = 0
+            if table[j][i] == 1
+                col = 2
+        if col == 2:
+            for j in range(5):
+                table[j][i] = 2
+            return True
+    return False
 
 if __name__ == '__main__':
     main(sys.argv[1:])
