@@ -142,9 +142,9 @@ def receiver(group, interface):
         for i in range(5):
             for j in range(5):
                 if line_table[i][j] > 0:
-                    print("X "),
+                    print("X ", end='')
                 else:
-                    print("* "),
+                    print("* ", end='')
             print() 
         print()
         if check(line_table):
