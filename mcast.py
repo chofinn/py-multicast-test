@@ -34,7 +34,7 @@ def main(argv):
     try:
       opts, args = getopt.getopt(argv,"s6i:",["inf="])
     except getopt.GetoptError:
-      print 'wrong input'
+      print ('wrong input')
       sys.exit(2)
     for opt, arg in opts:
       if opt == '-s':
@@ -69,8 +69,8 @@ def sender(group, interface):
 
     while True:
         #data = repr(time.time())
-        data = raw_input()
-        s.sendto(data + '\0', (addrinfo[4][0], MYPORT))
+        data = input()
+        s.sendto(data.encode(), (addrinfo[4][0], MYPORT))
         time.sleep(1)
 
 def receiver(group, interface):
@@ -123,7 +123,7 @@ def receiver(group, interface):
         while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         #print (str(sender) + '  ' + repr(data))
         data = int(data)
-        print "number: " + str(data)
+        print("number: " + str(data))
         x = -1
         y = -1
         for i in range(5):
@@ -145,8 +145,8 @@ def receiver(group, interface):
                     print("X "),
                 else:
                     print("* "),
-            print 
-        print
+            print() 
+        print()
         if check(line_table):
             bingo += 1
             print("bingo!!")
@@ -161,12 +161,12 @@ def get_ip_address(ifname):
         0x8915,  # SIOCGIFADDR
         struct.pack('256s', ifname[:15])
     )[20:24])
-
+    
 def write_table():
     print("start writing:")
     table = []
     for i in range(5):
-       line = raw_input().split()
+       line = input().split()
        line = [int(x) for x in line]
        table.append(line)
     print("end\n")
